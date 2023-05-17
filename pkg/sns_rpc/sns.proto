@@ -1,0 +1,28 @@
+syntax = "proto3";
+
+option go_package = "gitlab.fxt.cn/zhangxian/rpc-sns-cut/pkg/sns_rpc";
+
+package sns_rpc;
+
+
+message SnsRawContentReq {
+  repeated string content = 1;
+}
+
+message Cut {
+  string word = 1;
+  int32 count = 2;
+  float freq = 3;
+  float poly = 4;
+  float flex = 5;
+}
+
+message SnsReply {
+  repeated Cut cuts = 1;
+}
+
+
+service Cuter {
+  // 每次传输的文章最好是 1000 篇左右，否则会触发最大长度限制
+  rpc Cut (stream SnsRawContentReq) returns (stream SnsReply){}
+}

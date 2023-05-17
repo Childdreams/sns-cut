@@ -1,0 +1,12 @@
+unit_test:
+  stage: test
+  script:
+    - GOPROXY=https://goproxy.io/,direct GOPRIVATE=*.fxt.cn go test ./pkg/...
+
+build_image:
+  stage: deploy
+  only:
+    - master
+  script:
+    - docker build --build-arg GOPROXY=https://goproxy.io,direct --build-arg GOPRIVATE=*.fxt.cn -t hub.fxt.cn/sns-cut -f Dockerfile .
+    - docker push hub.fxt.cn/sns-cut

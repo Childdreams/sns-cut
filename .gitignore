@@ -1,0 +1,6 @@
+.idea/
+/*.sh
+.env
+data/
+cmd/client/
+bin/
